@@ -3,34 +3,31 @@
 
 string[] GetArray()
 {
-    Console.WriteLine("Please, input your array");
+    Console.WriteLine("Please, input your array troughout the comma, eg 1, 3, 5");
 
     string inputtedString = Console.ReadLine();
+
+    string[] newString = inputtedString.Trim( new Char[] { '\"', '\"', '[', ']' } ).Split(",");
     
-    if (inputtedString.Length > 0) return inputtedString.Split(",");
-    else return null;
+    return  newString;
 }
 
-string GetNewArray(string[] arr)
+void GetNewArray(string[] arr)
 {
-    var newArray = new string[arr.Length];
-    int newArraySize = 0;
-    foreach(var str in arr)
-    {
-        if (str.Length < 4) 
+    string[] newArray = new string[arr.Length];
+    for (int i = 0; i < arr.Length; i++)
+    {   string inf = arr[i].Trim();
+        Console.WriteLine($"string {inf}, Lenght - {inf.Length}");
+        if (inf.Length < 4) 
         {
-            newArray[newArraySize] = str;
-            newArraySize ++;
+            newArray[i] = inf;
         }
     }
-
-    return string.Join(',', newArray);
+    string[] res = newArray.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+    Console.WriteLine($"Новый массив - {string.Join(',', res)}");
 }
 
 string[] arr = GetArray();
+Console.WriteLine($"Старый массив - {string.Join(',', arr)}");
 
-Console.WriteLine(string.Join(',', arr));
-
-Console.WriteLine($"Новый массив - {GetNewArray(arr)}");
-
-
+GetNewArray(arr);
